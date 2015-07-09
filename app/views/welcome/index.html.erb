@@ -1,0 +1,13 @@
+<div class="well">
+  <% if current_user %>
+    <h2>Hello <%= "#{current_user.name}".titleize %>,</h2>
+
+    <br><div class="">
+      <%= link_to 'Get your FIT data', google_fit_path, class: 'btn btn-success btn-lg' %>
+    </div>
+  <% else %>
+      <h2>Welcome!</h2>
+      <p>Login with your google account to view your Google Fit data.</p><br>
+      <%= link_to 'Login with Google', '/auth/google', class: 'btn btn-success btn-lg' %>
+  <% end %>
+</div>
