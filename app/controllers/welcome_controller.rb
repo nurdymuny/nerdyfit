@@ -28,14 +28,16 @@ class WelcomeController < ApplicationController
       # Get Total Steps
       @result << get_result(days, point_time, 'walk')
 
-      point_time = {}
-      weight_count['point'].each_with_index do |weight, index|
-        start_time_mili = time_from_nano(weight['startTimeNanos']).to_i
-        point_time[index] = {"start_time_mili": "#{start_time_mili}", "weight": weight['value'].first.collect {|val| val[1]}.first}
-      end
+      unless weight_count['point'].nil?
+        point_time = {}
+        weight_count['point'].each_with_index do |weight, index|
+          start_time_mili = time_from_nano(weight['startTimeNanos']).to_i
+          point_time[index] = {"start_time_mili": "#{start_time_mili}", "weight": weight['value'].first.collect {|val| val[1]}.first}
+        end
 
-      # Get Total Weight
-      @result << get_result(days, point_time, 'weight')
+        # Get Total Weight
+        @result << get_result(days, point_time, 'weight')
+      end
     end
   end
 
@@ -56,9 +58,9 @@ class WelcomeController < ApplicationController
         end
 
         if activity == 'walk'
-          activity_detail = {date: Time.strptime(day[:end_time].to_s, '%Q').utc, activity_type: 'walk', steps: steps_or_weight, aggregated: aggregated}
+          activity_detail = {date: Time.strptime((day[:end_time]*1000).to_s, '%Q').utc, activity_type: 'walk', steps: steps_or_weight, aggregated: aggregated}
         else
-          activity_detail = {date: Time.strptime(day[:end_time].to_s, '%Q').utc, activity_type: 'weight', weight: steps_or_weight, aggregated: aggregated}
+          activity_detail = {date: Time.strptime((day[:end_time]*1000).to_s, '%Q').utc, activity_type: 'weight', weight: steps_or_weight, aggregated: aggregated}
         end
         result << activity_detail
       end
