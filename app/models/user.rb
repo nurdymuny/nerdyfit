@@ -20,13 +20,20 @@ class User < ActiveRecord::Base
       time_from = current_time.strftime('%Q').to_i*1000000
       time_to   = (current_time - 48.hours).strftime('%Q').to_i*1000000
 
-      url = "https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.google.step_count.delta:com.google.android.gms:merge_step_deltas/datasets/#{time_from}-#{time_to}?fields=minStartTimeNs,maxEndTimeNs,point(startTimeNanos,endTimeNanos,value)"
-      response    = RestClient.get url, {'Authorization': "Bearer #{user_token}"}
-      data << JSON.parse(response.body)
+      urls = [
+        "https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.google.step_count.delta:com.google.android.gms:merge_step_deltas/datasets/#{time_from}-#{time_to}?fields=minStartTimeNs,maxEndTimeNs,point(startTimeNanos,endTimeNanos,value)",
+        "https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.google.weight:com.google.android.gms:merge_weight/datasets/#{time_from}-#{time_to}"
+      ]
 
-      url = "https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.google.weight:com.google.android.gms:merge_weight/datasets/#{time_from}-#{time_to}"
+      urls.each do |url|
+        data << response_from_fit_storage(url, user_token)
+      end
+      data
+    end
+
+    def response_from_fit_storage(url, user_token)
       response    = RestClient.get url, {'Authorization': "Bearer #{user_token}"}
-      data << JSON.parse(response.body)
+      JSON.parse(response.body)
     end
   end
 
