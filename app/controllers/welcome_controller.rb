@@ -1,12 +1,12 @@
 class WelcomeController < ApplicationController
   require 'nerdyfit'
 
+  before_action :require_data, only: [:google_fit]
+
   def index
   end
 
   def google_fit
-    @data = User.get_fit_data (current_user.token)
-
     # Separate steps & weight data
     step_count, weight_count  = @data
     @result = []
@@ -20,5 +20,9 @@ class WelcomeController < ApplicationController
         @result << NerdyFit.get_result(count_array, point_counts, activity)
       end
     end
+  end
+
+  def require_data
+    @data = User.get_fit_data (current_user.token)
   end
 end
