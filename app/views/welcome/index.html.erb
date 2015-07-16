@@ -3,11 +3,16 @@
     <h2>Hello <%= "#{current_user.name}".titleize %>,</h2>
 
     <br><div class="">
-      <%= link_to 'Get your FIT Data for the last 2 days', google_fit_path, class: 'btn btn-success btn-lg' %>
+      <% if current_user.provider == 'google' %>
+        <%= link_to 'Get your FIT Data for the last 2 days', google_fit_path, class: 'btn btn-success btn-lg' %>
+      <% else %>
+        <%= link_to 'Get your iHealth Data for the last 2 days', ihealth_data_path, class: 'btn btn-success btn-lg' %>
+      <% end %>
     </div>
   <% else %>
       <h2>Welcome!</h2>
       <p>Login with your google account to view your Google Fit data.</p><br>
       <%= link_to 'Login with Google', '/auth/google', class: 'btn btn-success btn-lg' %>
+      <%= link_to 'Login with iHealth', '/auth/ihealth', class: 'btn btn-success btn-lg' %>
   <% end %>
 </div>

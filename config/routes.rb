@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   get 'google_fit', to: 'welcome#google_fit'
+  get 'ihealth_data', to: 'welcome#ihealth_data'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

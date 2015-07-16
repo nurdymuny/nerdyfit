@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-md-11">
+    <% unless @result.blank? %>
+       <pre><%= JSON.pretty_generate(@result) %></pre>
+    <% else %>
+        <div class="well">
+          You don't have any iHealth data.
+        </div>
+    <% end %>
+  </div>
+
+  <div class="col-md-1">
+    <%= link_to 'Cancel', root_path, class: 'btn btn-danger pull-right' %><br>
+  </div>
+</div>

@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/hspinks/omniauth-ihealth.git
+  revision: 55638428affa019c8d8a6bcac6b1af20d9b69b95
+  specs:
+    omniauth-ihealth (1.0.4)
+      omniauth (~> 1.0)
+      omniauth-oauth2 (~> 1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -192,6 +200,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   omniauth-google-oauth2
+  omniauth-ihealth!
   pg
   rails (= 4.2.0)
   rails_12factor

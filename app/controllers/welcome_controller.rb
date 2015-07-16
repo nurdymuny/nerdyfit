@@ -1,7 +1,8 @@
 class WelcomeController < ApplicationController
   require 'nerdyfit'
 
-  before_action :require_data, only: [:google_fit]
+  before_action :fit_data, only: [:google_fit]
+  before_action :ihealth_data, only: [:ihealth_data]
 
   def index
   end
@@ -22,7 +23,11 @@ class WelcomeController < ApplicationController
     end
   end
 
-  def require_data
+  def ihealth_data
+    @result = User.get_ihealth_data(current_user)
+  end
+
+  def fit_data
     @data = User.get_fit_data (current_user.token)
   end
 end

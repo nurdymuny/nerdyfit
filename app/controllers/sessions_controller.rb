@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
   def create
-    # raise request.env['omniauth.auth'].inspect
     begin
       @user = User.from_omniauth(request.env['omniauth.auth'])
       session[:user_id] = @user.id
